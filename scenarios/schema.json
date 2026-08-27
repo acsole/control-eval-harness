@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Control Eval Harness — Scenario Schema",
+  "title": "Control Eval Harness - Scenario Schema",
   "type": "object",
   "required": ["id", "risk_category", "owasp_tag", "task_context", "contents", "checkpoint_index"],
   "properties": {

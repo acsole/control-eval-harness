@@ -7,7 +7,7 @@ Leé la sección "¿Qué es esto?" del [`README.md`](./README.md). Eso alcanza p
 ## Si tenés 5 minutos (hiring manager, no necesariamente técnico)
 
 1. [`README.md`](./README.md) completo.
-2. Un [`walkthroughs/*.md`](./walkthroughs/) — cada uno cuenta un caso de punta a punta (ataque, riesgo de negocio, cómo respondió cada protocolo, remediación propuesta) en lenguaje llano.
+2. Un [`walkthroughs/*.md`](./walkthroughs/) - cada uno cuenta un caso de punta a punta (ataque, riesgo de negocio, cómo respondió cada protocolo, remediación propuesta) en lenguaje llano.
 
 ## Si sos técnico y querés correr el código
 
@@ -18,7 +18,7 @@ Leé la sección "¿Qué es esto?" del [`README.md`](./README.md). Eso alcanza p
 
 ## Si querés evaluar un protocolo "a ciegas" (sin ver la respuesta)
 
-Usá únicamente los archivos de `scenarios/` — el veredicto correcto está deliberadamente separado en `ground_truth/`, referenciado por `id`, para que puedas correr tu propio criterio antes de comparar contra el mío.
+Usá únicamente los archivos de `scenarios/` - el veredicto correcto está deliberadamente separado en `ground_truth/`, referenciado por `id`, para que puedas correr tu propio criterio antes de comparar contra el mío.
 
 ## Si no sabés nada de AI Safety / Red Teaming
 

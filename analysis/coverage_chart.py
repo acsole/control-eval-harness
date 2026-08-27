@@ -1,11 +1,11 @@
 """
-Chart 1 — Cobertura de diseño (spider/radar chart).
+Chart 1 - Cobertura de diseño (spider/radar chart).
 
 Herramienta VIVA: se corre en cualquier momento del proceso de diseño,
 antes de tener resultados de protocolos, para ver qué verticales tienen
 buena cobertura de escenarios y cuáles tienen huecos.
 
-Este es el "oráculo" declarado — el mapa de lo que se planificó probar,
+Este es el "oráculo" declarado - el mapa de lo que se planificó probar,
 contra el cual luego se compara el Chart 2 (desempeño de protocolos,
 ver performance_chart.py, pendiente hasta tener resultados de protocolos).
 
@@ -53,7 +53,7 @@ def plot_radar(counts: dict, target_per_vertical: int = 3):
     """
     Dibuja el radar chart de cobertura. target_per_vertical define el eje
     máximo de referencia (cuántos escenarios por vertical se consideran
-    "cobertura completa" para esta fase del proyecto) — ajustar a medida
+    "cobertura completa" para esta fase del proyecto) - ajustar a medida
     que el plan de escenarios se refine.
     """
     labels = list(counts.keys())
@@ -71,7 +71,7 @@ def plot_radar(counts: dict, target_per_vertical: int = 3):
     ax.set_xticklabels(labels, fontsize=9)
     ax.set_ylim(0, max(target_per_vertical, max(values)))
     ax.set_title(
-        "Chart 1 — Cobertura de diseño por vertical\n(oráculo: escenarios curados vs. objetivo)",
+        "Chart 1 - Cobertura de diseño por vertical\n(oráculo: escenarios curados vs. objetivo)",
         fontsize=11,
         pad=20,
     )

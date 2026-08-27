@@ -1,4 +1,4 @@
-# Validación externa — R-Judge
+# Validación externa - R-Judge
 
 **Estado: PENDIENTE de incorporación.** Esta carpeta va a contener un subset
 de R-Judge usado como set de contraste independiente: ¿el protocolo de
@@ -16,7 +16,7 @@ instrucciones.
   Agents", EMNLP Findings 2024.
 - Repositorio: https://github.com/Lordog/R-Judge
 
-## Aviso de licencia — IMPORTANTE
+## Aviso de licencia - IMPORTANTE
 
 R-Judge está publicado bajo licencia **CC BY-NC-SA** (Atribución -
 NoComercial - CompartirIgual). Esto significa:

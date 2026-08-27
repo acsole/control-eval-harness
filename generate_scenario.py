@@ -3,14 +3,14 @@ Genera el/los turno(s) críticos de un escenario vía API, dado un template
 escrito a mano con el resto de la trayectoria fija.
 
 Diseño deliberado para controlar costo: NO genera la trayectoria completa.
-El humano escribe task_context, los turnos de usuario y de ambiente
-(incluida cualquier inyección). La API se llama únicamente para generar
+El task_context, los turnos de usuario y de ambiente
+(incluida cualquier inyección) se escriben a mano. La API se llama únicamente para generar
 la respuesta del agente en el/los turno(s) marcados como "a completar",
 típicamente 1-2 llamadas por escenario.
 
 Uso esperado: correr este script una vez por escenario nuevo, revisar el
 resultado a mano, y commitear el JSON final a scenarios/. No se re-corre
-en cada evaluación de protocolo — eso es responsabilidad de protocols/*.py,
+en cada evaluación de protocolo - eso es responsabilidad de protocols/*.py,
 que operan 100% sobre los JSON ya generados y versionados.
 
 Estado: PENDIENTE de primera ejecución real. asi01_001 fue diseñado

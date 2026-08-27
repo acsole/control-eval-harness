@@ -1,4 +1,4 @@
-# Secretos — nunca commitear la API key
+# Secretos - nunca commitear la API key
 .env
 *.key
 

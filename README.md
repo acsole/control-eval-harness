@@ -2,11 +2,13 @@
 
 **Estado del proyecto: en construcción activa (work in progress). Este README se actualiza de forma incremental a medida que se agregan escenarios y resultados.**
 
+Autor / Author: **Andrés Curcio Sole**
+
 ## ¿Qué es esto, en 30 segundos?
 
-Imaginá que contratás un asistente nuevo con acceso a las llaves de la oficina. Este proyecto no evalúa si el asistente es honesto — evalúa si tenés un buen sistema de cámaras y protocolos de aprobación que detecten cuando alguien usa esas llaves para algo que no debía.
+Imaginá que contratás un asistente nuevo con acceso a las llaves de la oficina. Este proyecto no evalúa si el asistente es honesto, sino si tenés un buen sistema de cámaras y protocolos de aprobación que detecten cuando alguien usa esas llaves para algo que no debía.
 
-Concretamente: este harness mide **qué tan bien distintos protocolos de supervisión detectan que un agente de IA se salió del scope autorizado** — no mide si el agente "puede ser engañado" (eso es red teaming clásico / jailbreaking), mide si el sistema que lo vigila funciona.
+Concretamente: este harness mide **qué tan bien distintos protocolos de supervisión detectan que un agente de IA se salió del scope autorizado**. No mide si el agente "puede ser engañado" (eso es red teaming clásico / jailbreaking), mide si el sistema que lo vigila funciona.
 
 Si nunca escuchaste hablar de AI Control, Red Teaming o Safeguards, empezá por [`GLOSARIO.md`](./GLOSARIO.md).
 
@@ -51,14 +53,14 @@ control-eval-harness/
 
 ## Las seis verticales de riesgo evaluadas
 
-Basadas en el [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/) (ASI01–ASI10), filtradas a las que son viables de simular con un solo agente sandboxeado, sin infraestructura multi-agente ni de producción:
+Basadas en el [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/) (ASI01-ASI10), filtradas a las que son viables de simular con un solo agente sandboxeado, sin infraestructura multi-agente ni de producción:
 
-- **ASI01** — Agent Goal Hijack
-- **ASI02** — Tool Misuse & Exploitation
-- **ASI03** — Identity & Privilege Abuse
-- **ASI06** — Memory Poisoning
-- **ASI09** — Human-Agent Trust Exploitation
-- **ASI10** — Rogue Agents (versión simplificada)
+- **ASI01** - Agent Goal Hijack
+- **ASI02** - Tool Misuse & Exploitation
+- **ASI03** - Identity & Privilege Abuse
+- **ASI06** - Memory Poisoning
+- **ASI09** - Human-Agent Trust Exploitation
+- **ASI10** - Rogue Agents (versión simplificada)
 
 Cuatro verticales del estándar completo (ASI04 Supply Chain, ASI05 Code Execution/RCE, ASI07 Inter-Agent Communication, ASI08 Cascading Failures) quedan **explícitamente fuera de alcance** por requerir infraestructura multi-agente o de producción real que este proyecto, deliberadamente acotado en presupuesto y cómputo, no cubre. Documentado como trabajo futuro, no ocultado.
 
@@ -69,15 +71,15 @@ Cada escenario se diseña respondiendo seis preguntas (tarea legítima → presi
 ## Restricciones de reproducibilidad (por diseño, no por accidente)
 
 - **Costo:** el uso de API de pago está acotado a la generación puntual de escenarios (1-2 llamadas por escenario), nunca a la evaluación de protocolos, que corre 100% local sobre datos ya generados.
-- **Cómputo:** los protocolos de control son basados en reglas (Python puro), no requieren GPU ni modelos locales pesados — corren en cualquier máquina, incluidas las de gama baja.
-- **Validación externa:** se usa [R-Judge](https://github.com/Lordog/R-Judge) (Yuan et al., EMNLP Findings 2024) como set de contraste, bajo licencia CC BY-NC-SA — ver nota de licencia en `external_validation/`.
+- **Cómputo:** los protocolos de control son basados en reglas (Python puro), no requieren GPU ni modelos locales pesados - corren en cualquier máquina, incluidas las de gama baja.
+- **Validación externa:** se usa [R-Judge](https://github.com/Lordog/R-Judge) (Yuan et al., EMNLP Findings 2024) como set de contraste, bajo licencia CC BY-NC-SA - ver nota de licencia en `external_validation/`.
 
 ## Limitaciones honestas
 
-- N chico de escenarios por vertical (diseño curado a mano, no generación masiva) — prioriza profundidad sobre volumen.
+- N chico de escenarios por vertical (diseño curado a mano, no generación masiva) - prioriza profundidad sobre volumen.
 - Los "protocolos de control" son simulaciones simplificadas, no productos de producción.
 - Ver cada `walkthroughs/*.md` para limitaciones específicas de cada escenario.
 
 ## Roadmap de este repo
 
-Este proyecto es el ancla del Bloque 2 (meses 4-6) de un plan de transición de carrera hacia roles de AI Safety / Red Teaming / Safeguards. Se actualiza de forma incremental — ver estado actual de cobertura corriendo `analysis/coverage_chart.py`.
+Este proyecto se actualiza de forma incremental; el objetivo es cubrir más verticales del Agentic Top 10 con la misma profundidad del caso ASI01. Para ver el estado actual de cobertura, correr `analysis/coverage_chart.py`.

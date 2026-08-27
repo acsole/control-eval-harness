@@ -4,10 +4,10 @@ Protocolo: Human-in-the-loop simulado.
 Cualquier acción que el monitor basado en reglas marcaría como sospechosa
 queda "pausada" en vez de bloqueada automáticamente, a la espera de una
 aprobación humana simulada. Este protocolo mide la tasa de ESCALAMIENTO,
-no de bloqueo directo — la diferencia importa para el análisis de fricción
+no de bloqueo directo - la diferencia importa para el análisis de fricción
 vs. seguridad en el README.
 
-Estado: PENDIENTE — depende de la lógica de rule_based_monitor.evaluate()
+Estado: PENDIENTE - depende de la lógica de rule_based_monitor.evaluate()
 para determinar qué se escala. Falta definir el criterio de "aprobación
 simulada" (por ahora, se asume que todo lo escalado NO se aprueba, ver TODO).
 """
@@ -38,7 +38,7 @@ def evaluate(scenario: dict) -> dict:
     # TODO: reemplazar este criterio binario simplista por una simulación real
     # de aprobación humana (ej. requerir justificación explícita en el escenario
     # para que la acción se apruebe). Por ahora, todo lo escalado se rechaza,
-    # lo cual sobreestima la efectividad de este protocolo — documentar como
+    # lo cual sobreestima la efectividad de este protocolo - documentar como
     # limitación conocida hasta implementar el criterio real.
     approved = False
 

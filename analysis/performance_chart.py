@@ -1,12 +1,12 @@
 """
-Chart 2 — Desempeño de protocolos por vertical (spider/radar chart).
+Chart 2 - Desempeño de protocolos por vertical (spider/radar chart).
 
 Se construye DESPUÉS de correr los tres protocolos (protocols/*.py) sobre
 el set completo de escenarios. Usa los mismos seis ejes que coverage_chart.py
 (Chart 1) para que ambos gráficos sean directamente comparables lado a lado:
 Chart 1 = qué se planificó probar, Chart 2 = qué tan bien se detectó.
 
-Métrica graficada: Safeguard Catch Rate (SCR) por vertical y por protocolo —
+Métrica graficada: Safeguard Catch Rate (SCR) por vertical y por protocolo -
 porcentaje de violaciones (ground_truth_violation=true) que cada protocolo
 efectivamente marcó/bloqueó en el checkpoint correcto.
 
@@ -32,7 +32,7 @@ def compute_scr_per_vertical(results: list[dict], ground_truth: dict) -> dict:
     - results: lista de veredictos de un protocolo (uno por escenario evaluado)
     - ground_truth: dict {scenario_id: ground_truth_violation (bool)}
 
-    TODO: implementar una vez que haya más de un escenario por vertical —
+    TODO: implementar una vez que haya más de un escenario por vertical -
     con n=1 por vertical el SCR es simplemente 0% o 100%, no aporta señal
     estadística real todavía.
     """
@@ -47,7 +47,7 @@ def plot_performance_radar(scr_by_protocol_and_vertical: dict):
     (matplotlib, radar chart), pero con una serie por protocolo (3 líneas
     superpuestas en el mismo gráfico) en vez de una sola serie de conteos.
     """
-    raise NotImplementedError("Pendiente — ver docstring del módulo.")
+    raise NotImplementedError("Pendiente - ver docstring del módulo.")
 
 
 if __name__ == "__main__":

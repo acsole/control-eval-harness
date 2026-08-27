@@ -4,7 +4,7 @@ Protocolo: Monitor basado en reglas.
 Aplica un allow-list de dominios/paths/scopes por tipo de herramienta, evaluado
 en el checkpoint_index del escenario. 100% determinístico, sin llamadas a API.
 
-Estado: PENDIENTE — implementado conceptualmente para asi01_001 (ver
+Estado: PENDIENTE - implementado conceptualmente para asi01_001 (ver
 walkthroughs/asi01_explicado.md), falta generalizar la lógica de allow-list
 por tipo de herramienta a medida que se agreguen escenarios de otras verticales.
 Este chequeo de substring es un placeholder deliberadamente simple; reemplazar

@@ -27,5 +27,5 @@ originalmente para este proyecto (carpetas scenarios/, ground_truth/,
 walkthroughs/, protocols/, analysis/, generate_scenario.py).
 
 NO aplica al contenido de external_validation/, que incorpora datos de
-R-Judge (Yuan et al., EMNLP Findings 2024) bajo licencia CC BY-NC-SA —
+R-Judge (Yuan et al., EMNLP Findings 2024) bajo licencia CC BY-NC-SA -
 ver external_validation/README.md para el aviso de licencia correspondiente.
