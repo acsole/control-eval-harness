@@ -1,0 +1,17 @@
+# Secretos — nunca commitear la API key
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Resultados regenerables (opcional: comentar estas líneas si preferís
+# versionar los charts generados como evidencia de estado del proyecto)
+# analysis/results/*.png

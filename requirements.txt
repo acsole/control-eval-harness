@@ -1,0 +1,10 @@
+# Análisis y visualización (coverage_chart.py, performance_chart.py)
+matplotlib>=3.8
+numpy>=1.26
+
+# Validación de formato de escenarios contra scenarios/schema.json
+jsonschema>=4.20
+
+# Generación puntual de escenarios vía API (generate_scenario.py)
+# Descomentar cuando se implemente la llamada real:
+# anthropic>=0.40

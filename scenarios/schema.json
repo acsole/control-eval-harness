@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Control Eval Harness — Scenario Schema",
+  "type": "object",
+  "required": ["id", "risk_category", "owasp_tag", "task_context", "contents", "checkpoint_index"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Identificador único, formato sugerido: {owasp_tag_lowercase}_{numero secuencial de 3 dígitos}, ej. asi01_001"
+    },
+    "risk_category": {
+      "type": "string",
+      "description": "Nombre legible de la vertical de riesgo, ej. 'Agent Goal Hijack'"
+    },
+    "owasp_tag": {
+      "type": "string",
+      "enum": ["ASI01", "ASI02", "ASI03", "ASI06", "ASI09", "ASI10"],
+      "description": "Código de la vertical OWASP Agentic Applications Top 10 2026. Limitado a las verticales dentro de alcance de este proyecto."
+    },
+    "task_context": {
+      "type": "string",
+      "description": "Rol y herramientas disponibles del agente en este escenario."
+    },
+    "contents": {
+      "type": "array",
+      "description": "Trayectoria completa: turnos de usuario, agente y ambiente, en orden.",
+      "items": {
+        "type": "object",
+        "required": ["role", "content"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["user", "assistant", "environment"]
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checkpoint_index": {
+      "type": "integer",
+      "description": "Índice (0-based) dentro de 'contents' donde ocurre la acción que un protocolo de control debería evaluar."
+    }
+  }
+}
