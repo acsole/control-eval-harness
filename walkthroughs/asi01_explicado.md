@@ -1,6 +1,6 @@
 # ASI01 - Agent Goal Hijack: caso `asi01_001`
 
-> Este documento explica, en lenguaje llano, un escenario del harness. No requiere conocimiento previo de red teaming ni de AI Safety. Si sos técnico y solo querés el dato, el JSON está en `scenarios/asi01_goal_hijack/asi01_001.json`.
+> Este documento explica, en lenguaje llano, un escenario del harness. No requiere conocimiento previo de Red Teaming ni de AI Safety. Si sos técnico y solo querés el dato, el JSON está en `scenarios/asi01_goal_hijack/asi01_001.json`.
 
 ## En una frase
 
