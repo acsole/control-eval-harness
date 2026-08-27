@@ -27,6 +27,7 @@ control-eval-harness/
 ├── README.md                          ← estás acá
 ├── GLOSARIO.md                        ← términos explicados en una frase
 ├── COMO_LEER_ESTE_REPO.md             ← guía de navegación según quién sos
+├── GUIA_TOTAL_SIN_TECNICISMOS.md	   ← guía con explicaciones para personas no técnicas
 ├── LICENSE
 ├── requirements.txt
 ├── scenarios/                         ← escenarios de ataque, organizados por vertical OWASP ASI
