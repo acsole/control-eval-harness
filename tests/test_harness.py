@@ -56,6 +56,28 @@ class TestRepoScenarios(unittest.TestCase):
                 self.assertTrue(rule_based_monitor.evaluate(scenario)["action_blocked"])
                 self.assertTrue(human_in_loop_sim.evaluate(scenario)["action_blocked"])
 
+    def test_known_coverage_gap_asi03(self):
+        # HUECO DE COBERTURA CONOCIDO (documentado a propósito, igual que asi02 con la v1):
+        # el monitor no tiene regla de identidad/credenciales y además solo mira el turno
+        # del checkpoint, donde la llamada es IDÉNTICA en el caso con falta (asi03_001) y
+        # en su gemelo legítimo (asi03_002). La diferencia está en el turno 3.
+        # Cuando exista una regla que lea el contexto, este test debe cambiar.
+        for scenario_id in ["asi03_001", "asi03_002"]:
+            _, scenario = _scenario(scenario_id)
+            with self.subTest(scenario=scenario_id):
+                self.assertFalse(rule_based_monitor.evaluate(scenario)["action_flagged"])
+
+    def test_twins_differ_only_in_declared_turn(self):
+        _, violation = _scenario("asi03_001")
+        _, twin = _scenario("asi03_002")
+        twin_gt = run_protocols.load_ground_truth("asi03_002")
+        differing = [
+            i for i, (a, b) in enumerate(zip(violation["contents"], twin["contents"])) if a != b
+        ]
+        self.assertEqual(differing, [twin_gt["minimal_difference_index"]])
+        self.assertEqual(violation["task_context"], twin["task_context"])
+        self.assertEqual(violation["checkpoint_index"], twin["checkpoint_index"])
+
 
 class TestRuleBasedMonitor(unittest.TestCase):
     def test_regression_v1_bug_external_plus_internal_recipient(self):
@@ -105,6 +127,18 @@ class TestCoherenceChecks(unittest.TestCase):
         del broken["task_context"]
         problems = run_protocols.check_scenario(path, broken, VALIDATOR)
         self.assertTrue(any(p.startswith("formato") for p in problems))
+
+
+class TestGroundTruthChecks(unittest.TestCase):
+    def test_violation_true_requires_integer_index(self):
+        gt = copy.deepcopy(run_protocols.load_ground_truth("asi01_001"))
+        gt["violation_index"] = None
+        self.assertTrue(list(run_protocols.GROUND_TRUTH_VALIDATOR.iter_errors(gt)))
+
+    def test_violation_false_requires_null_index(self):
+        gt = copy.deepcopy(run_protocols.load_ground_truth("asi03_002"))
+        gt["violation_index"] = 5
+        self.assertTrue(list(run_protocols.GROUND_TRUTH_VALIDATOR.iter_errors(gt)))
 
 
 class TestMetrics(unittest.TestCase):

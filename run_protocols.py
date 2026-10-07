@@ -15,8 +15,10 @@ Antes de evaluar, cada escenario pasa por dos controles:
    tipos, valores permitidos).
 2. Coherencia: el id coincide con el nombre del archivo, el owasp_tag
    coincide con la carpeta de la vertical, el checkpoint_index existe dentro
-   de la trayectoria, y (si hay ground truth) su violation_index apunta al
-   mismo turno que el checkpoint.
+   de la trayectoria, y (si hay ground truth) este cumple ground_truth/schema.json,
+   su violation_index apunta al mismo turno que el checkpoint (o es null si
+   el caso es legítimo), y si declara un gemelo (twin_id), el gemelo existe
+   y lo apunta de vuelta.
 Un escenario que falla cualquiera de los dos controles NO se evalúa, se
 reporta con un mensaje legible, y el script termina con código de error 1
 (para que un test o el CI lo detecten).
@@ -35,6 +37,7 @@ ROOT = Path(__file__).parent
 SCENARIOS_DIR = ROOT / "scenarios"
 SCHEMA_PATH = SCENARIOS_DIR / "schema.json"
 GROUND_TRUTH_DIR = ROOT / "ground_truth"
+GROUND_TRUTH_SCHEMA_PATH = GROUND_TRUTH_DIR / "schema.json"
 RESULTS_DIR = ROOT / "analysis" / "results"
 
 PROTOCOLS = {
@@ -43,12 +46,13 @@ PROTOCOLS = {
     "human_in_loop_sim": human_in_loop_sim.evaluate,
 }
 
-GROUND_TRUTH_REQUIRED = ["id", "ground_truth_violation", "violation_index"]
-
 
 def _read_json(path: Path) -> dict:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+GROUND_TRUTH_VALIDATOR = Draft7Validator(_read_json(GROUND_TRUTH_SCHEMA_PATH))
 
 
 def load_scenarios() -> list[tuple[Path, dict]]:
@@ -102,14 +106,28 @@ def check_scenario(path: Path, scenario: dict, validator: Draft7Validator) -> li
 
     gt = load_ground_truth(scenario["id"])
     if gt is not None:
-        missing = [k for k in GROUND_TRUTH_REQUIRED if k not in gt]
-        if missing:
-            problems.append(f"ground truth - faltan campos: {', '.join(missing)}")
-        elif gt["violation_index"] != scenario["checkpoint_index"]:
-            problems.append(
-                f"ground truth - violation_index {gt['violation_index']} no coincide "
-                f"con checkpoint_index {scenario['checkpoint_index']}"
-            )
+        gt_errors = list(GROUND_TRUTH_VALIDATOR.iter_errors(gt))
+        for error in gt_errors:
+            field = ".".join(str(p) for p in error.absolute_path) or "(raíz)"
+            problems.append(f"ground truth - formato - campo '{field}': {error.message}")
+        if not gt_errors:
+            if gt["ground_truth_violation"] and gt["violation_index"] != scenario["checkpoint_index"]:
+                problems.append(
+                    f"ground truth - violation_index {gt['violation_index']} no coincide "
+                    f"con checkpoint_index {scenario['checkpoint_index']}"
+                )
+            if "twin_id" in gt:
+                twin = load_ground_truth(gt["twin_id"])
+                if twin is None:
+                    problems.append(
+                        f"ground truth - twin_id '{gt['twin_id']}' no tiene "
+                        f"ground_truth/{gt['twin_id']}.json"
+                    )
+                elif twin.get("twin_id") != scenario["id"]:
+                    problems.append(
+                        f"ground truth - el gemelo '{gt['twin_id']}' no apunta de vuelta "
+                        f"a '{scenario['id']}' (su twin_id es {twin.get('twin_id')!r})"
+                    )
 
     return problems
 
