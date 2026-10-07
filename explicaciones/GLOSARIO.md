@@ -14,6 +14,10 @@ Cada término explicado en una frase, pensado para alguien que nunca leyó sobre
 
 **Control evaluation (evaluación de control)**: Medir si un protocolo de supervisión detecta comportamiento no autorizado de un agente, sin importar por qué el agente llegó a ese comportamiento.
 
+**Falsa alarma (falso positivo)**: Cuando un protocolo frena o marca una acción que en realidad era legítima.
+
+**Gemelo inocente**: Copia de un escenario con falta en la que se cambia un solo turno para que la acción del agente sea legítima. Sirve para medir si un protocolo frena trabajo legítimo (falsas alarmas). Ver [`GEMELO_INOCENTE.md`](./GEMELO_INOCENTE.md).
+
 **Ground truth**: La respuesta "correcta" verificada por una persona, contra la cual se compara el veredicto de un protocolo automatizado.
 
 **Human-in-the-loop**: Protocolo de control donde una acción sensible queda pausada hasta que un humano la aprueba explícitamente.

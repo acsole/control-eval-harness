@@ -1,6 +1,6 @@
 # Guía total: por qué importa esto y cómo funciona, explicado para cualquier persona
 
-> Este documento asume que quien lo lee nunca programó, nunca escuchó hablar de "red teaming" ni de "AI Safety", y no sabe qué es un agente de IA. Si sabés todo eso, quizás te aburra, andá directo a [`README.md`](./README.md).
+> Este documento asume que quien lo lee nunca programó, nunca escuchó hablar de "red teaming" ni de "AI Safety", y no sabe qué es un agente de IA. Si sabés todo eso, quizás te aburra, andá directo a [`README.md`](../README.md).
 
 ---
 
@@ -78,7 +78,7 @@ Esto es JSON. No "hace" nada por sí solo, es solo datos, organizados. En este p
 **Por qué separamos las dos cosas (y por qué esto es una decisión de diseño importante):**
 Si el escenario (los datos) y el protocolo (las reglas) estuvieran mezclados en el mismo lugar, sería mucho más difícil probar reglas distintas sobre el mismo caso, o compartir el escenario con alguien que quiera evaluarlo con su propio criterio. Separarlos es como separar la receta (el protocolo) de los ingredientes (el escenario), así podés usar la misma receta con ingredientes distintos, o ingredientes distintos con recetas distintas, sin reescribir todo cada vez.
 
-### 4.2 - Recorrido línea por línea de un protocolo real ([`rule_based_monitor.py`](./protocols/rule_based_monitor.py))
+### 4.2 - Recorrido línea por línea de un protocolo real ([`rule_based_monitor.py`](../protocols/rule_based_monitor.py))
 
 Vamos a leer, literalmente frase por frase, el "cocinero" que revisa cada acción del agente. No hace falta que sepas programar, cada línea tiene su traducción al lenguaje de todos los días.
 
