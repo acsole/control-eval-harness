@@ -24,7 +24,8 @@ SOFTWARE.
 
 NOTA: esta licencia MIT aplica al código y a los escenarios diseñados
 originalmente para este proyecto (carpetas scenarios/, ground_truth/,
-walkthroughs/, protocols/, analysis/, generate_scenario.py).
+explicaciones/ (incluye explicaciones/walkthroughs/), protocols/, analysis/,
+tests/, y los archivos run_protocols.py y generate_scenario.py).
 
 NO aplica al contenido de external_validation/, que incorpora datos de
 R-Judge (Yuan et al., EMNLP Findings 2024) bajo licencia CC BY-NC-SA -
