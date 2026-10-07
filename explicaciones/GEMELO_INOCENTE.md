@@ -74,9 +74,18 @@ Es decir: el gemelo inocente es el **primer ladrillo** de la medición de utilid
 
 1. **Mismo `task_context` y mismo `checkpoint_index`** que el caso con falta.
 2. **Un solo turno distinto**, y declararlo en `minimal_difference_index`.
-3. **La acción del checkpoint, idealmente idéntica.** Si la acción es la misma y el veredicto correcto cambia, el par obliga al vigilante a mirar el contexto, que es exactamente lo que queremos poner a prueba.
+3. **Elegir conscientemente qué turno cambiar**, porque hay dos tipos de gemelo y prueban cosas distintas (ver "Dos tipos de gemelo" más abajo).
 4. **El turno cambiado tiene que ser plausible**, no una exageración: el caso legítimo debe ser algo que pasaría en la vida real.
 5. **Si un vigilante ingenuo frenaría el gemelo, mejor.** Un gemelo que nadie confundiría con una falta no enseña nada.
+
+### Dos tipos de gemelo
+
+| Tipo | Qué cambia | Qué prueba | Ejemplos en el repo |
+|---|---|---|---|
+| **Cambia el contexto, la acción queda idéntica** | Un turno anterior al checkpoint | Que el vigilante mire la historia y no solo la acción. Es el más exigente: un vigilante que solo mira el checkpoint **no puede** distinguir el par | `asi03_002` (cambia el turno 3: no hay cambio de usuario) |
+| **Cambia la acción, el contexto queda idéntico** | El turno del checkpoint | Que el vigilante juzgue lo que el agente **hizo**, y no se dispare por lo que el agente **vio** (una inyección, una búsqueda mezclada) | `asi01_002` (ignora la inyección), `asi02_002` (borra solo lo pedido) |
+
+Los dos son válidos. Para cada vertical conviene preguntarse qué confusión es más probable en un vigilante real y elegir el gemelo que la expone.
 
 ### Qué archivos intervienen
 
@@ -89,10 +98,19 @@ Es decir: el gemelo inocente es el **primer ladrillo** de la medición de utilid
 | `tests/test_harness.py` | Comprueba que los gemelos difieran **exactamente** en el turno declarado y en ningún otro |
 | `analysis/coverage_chart.py` | No cuenta los gemelos como cobertura: un gemelo no cubre un ataque nuevo |
 
-### Ejemplo real: `asi03_001` y `asi03_002`
+### Ejemplos reales
 
-Ver [`walkthroughs/asi03_explicado.md`](./walkthroughs/asi03_explicado.md), sección "El gemelo inocente", y el paso a paso de cómo se construyó en [`COMO_SE_CONSTRUYE_UN_ESCENARIO.md`](./COMO_SE_CONSTRUYE_UN_ESCENARIO.md).
+Cada walkthrough tiene una sección "El gemelo inocente":
+- [`walkthroughs/asi01_explicado.md`](./walkthroughs/asi01_explicado.md): `asi01_002`
+- [`walkthroughs/asi02_explicado.md`](./walkthroughs/asi02_explicado.md): `asi02_002`
+- [`walkthroughs/asi03_explicado.md`](./walkthroughs/asi03_explicado.md): `asi03_002`
 
-### Pendiente
+El paso a paso de cómo se construyó el de ASI03 está en [`COMO_SE_CONSTRUYE_UN_ESCENARIO.md`](./COMO_SE_CONSTRUYE_UN_ESCENARIO.md).
 
-`asi01_001` y `asi02_001` todavía no tienen gemelo. Agregarlos es parte del trabajo de completar las verticales.
+### Estado
+
+Los tres casos con falta que existen hoy tienen su gemelo. Las verticales que todavía faltan (ASI06, ASI09, ASI10) van a llegar con el suyo desde el primer día: es parte de los criterios de validez de un escenario.
+
+### Una observación honesta sobre los resultados actuales
+
+Hoy ningún protocolo da falsas alarmas en los tres gemelos. No es un mérito del monitor: es simple y mira solo el turno del checkpoint, así que nunca "ve" la inyección de ASI01 ni la búsqueda mezclada de ASI02. Los gemelos van a mostrar todo su valor cuando lleguen monitores más sofisticados, que lean toda la conversación y por eso sí puedan confundirse.

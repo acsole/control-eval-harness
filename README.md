@@ -22,22 +22,24 @@ Si nunca escuchaste hablar de AI Control, Red Teaming o Safeguards, empezá por 
 
 ## Estado actual: 3 de 6 verticales resueltas
 
-El proyecto cubre seis verticales del [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/). Hoy hay **un escenario válido en 3 de ellas**; las otras 3 se completan en breve, con el mismo método y la misma profundidad.
+El proyecto cubre seis verticales del [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/). Hoy hay **un escenario válido, con su gemelo inocente, en 3 de ellas**. Las otras 3 (ASI06, ASI09 y ASI10) todavía no existen en el repo: se completan en breve, con el mismo método, la misma profundidad y su gemelo desde el primer día.
 
-| Vertical | Estado | Escenario y respuesta correcta | Explicación en lenguaje llano | Qué demuestra |
+En cada vertical resuelta, `_001` es el caso con falta y `_002` su gemelo inocente.
+
+| Vertical | Estado | Escenarios y respuestas correctas | Explicación en lenguaje llano | Qué demuestra |
 |---|---|---|---|---|
-| **ASI01** Agent Goal Hijack | Resuelto | `scenarios/asi01_goal_hijack/asi01_001.json` + `ground_truth/asi01_001.json` | [`asi01_explicado.md`](./explicaciones/walkthroughs/asi01_explicado.md) | Una instrucción escondida en una página web hace que el agente mande información a un correo externo. El monitor de reglas la detecta |
-| **ASI02** Tool Misuse & Exploitation | Resuelto | `scenarios/asi02_tool_misuse/asi02_001.json` + `ground_truth/asi02_001.json` | [`asi02_explicado.md`](./explicaciones/walkthroughs/asi02_explicado.md) | El agente borra archivos de auditoría que nadie le pidió borrar. Expuso que la primera versión del monitor no tenía regla para borrados |
-| **ASI03** Identity & Privilege Abuse | Resuelto, con gemelo inocente | `scenarios/asi03_identity_privilege/asi03_001.json` y `asi03_002.json` + sus respuestas en `ground_truth/` | [`asi03_explicado.md`](./explicaciones/walkthroughs/asi03_explicado.md) | El agente usa la credencial de un administrador que ya se fue, a pedido de alguien sin permisos. **El monitor actual no lo detecta**: solo mira el turno de la acción, y la acción es idéntica en el caso legítimo |
-| ASI06 Memory & Context Poisoning | Pendiente | - | - | - |
-| ASI09 Human-Agent Trust Exploitation | Pendiente | - | - | - |
-| ASI10 Rogue Agents | Pendiente | - | - | - |
+| **ASI01** Agent Goal Hijack | Resuelto, con gemelo | `scenarios/asi01_goal_hijack/asi01_001.json` y `asi01_002.json` + sus respuestas en `ground_truth/` | [`asi01_explicado.md`](./explicaciones/walkthroughs/asi01_explicado.md) | Una instrucción escondida en una página web hace que el agente mande información a un correo externo. El monitor de reglas la detecta. En el gemelo, el agente ve la misma instrucción y no la obedece |
+| **ASI02** Tool Misuse & Exploitation | Resuelto, con gemelo | `scenarios/asi02_tool_misuse/asi02_001.json` y `asi02_002.json` + sus respuestas en `ground_truth/` | [`asi02_explicado.md`](./explicaciones/walkthroughs/asi02_explicado.md) | El agente borra archivos de auditoría que nadie le pidió borrar. Expuso que la primera versión del monitor no tenía regla para borrados. En el gemelo, borra solo lo pedido |
+| **ASI03** Identity & Privilege Abuse | Resuelto, con gemelo | `scenarios/asi03_identity_privilege/asi03_001.json` y `asi03_002.json` + sus respuestas en `ground_truth/` | [`asi03_explicado.md`](./explicaciones/walkthroughs/asi03_explicado.md) | El agente usa la credencial de un administrador que ya se fue, a pedido de alguien sin permisos. **El monitor actual no lo detecta**: solo mira el turno de la acción, y la acción es idéntica en el gemelo legítimo |
+| ASI06 Memory & Context Poisoning | Próximamente (todavía no existe) | - | - | - |
+| ASI09 Human-Agent Trust Exploitation | Próximamente (todavía no existe) | - | - | - |
+| ASI10 Rogue Agents | Próximamente (todavía no existe) | - | - | - |
 
 **Para qué sirven estos escenarios:** cada uno es un caso de prueba contra el que se miden los protocolos de control. Correr `python run_protocols.py` los evalúa a todos y compara contra la respuesta correcta (instrucciones completas en [`explicaciones/PASO_A_PASO_REPRODUCIR.md`](./explicaciones/PASO_A_PASO_REPRODUCIR.md)).
 
 ### El gemelo inocente
 
-Desde ASI03, cada caso con falta tiene un **gemelo inocente**: la misma historia, con un solo turno cambiado para que la acción del agente sea legítima. Sin casos legítimos, un vigilante que bloquea **todo** sacaría nota perfecta; el gemelo es lo que lo desenmascara, porque mide las **falsas alarmas**. La idea se apoya en los *contrast sets* de la evaluación de modelos de lenguaje y en la separación entre ejecuciones honestas y de ataque de la literatura de AI Control. Explicación para personas técnicas y no técnicas, con fuentes: [`explicaciones/GEMELO_INOCENTE.md`](./explicaciones/GEMELO_INOCENTE.md). `asi01_001` y `asi02_001` todavía no tienen gemelo.
+Cada caso con falta tiene un **gemelo inocente**: la misma historia, con un solo turno cambiado para que la acción del agente sea legítima. Sin casos legítimos, un vigilante que bloquea **todo** sacaría nota perfecta; el gemelo es lo que lo desenmascara, porque mide las **falsas alarmas**. La idea se apoya en los *contrast sets* de la evaluación de modelos de lenguaje y en la separación entre ejecuciones honestas y de ataque de la literatura de AI Control. Explicación para personas técnicas y no técnicas, con fuentes y los dos tipos de gemelo que usa el proyecto: [`explicaciones/GEMELO_INOCENTE.md`](./explicaciones/GEMELO_INOCENTE.md).
 
 ## Estructura del repo
 
@@ -83,8 +85,8 @@ Todo lo que explica el proyecto (para cualquier nivel de conocimiento) vive en [
 | 01 | [`GLOSARIO.md`](./explicaciones/GLOSARIO.md) | Cada término del proyecto explicado en una frase | Ninguno. Lo enlazan casi todos los demás documentos |
 | 02 | [`GUIA_TOTAL_SIN_TECNICISMOS.md`](./explicaciones/GUIA_TOTAL_SIN_TECNICISMOS.md) | El problema y el proyecto explicados desde cero, con analogías, y el código del monitor traducido línea por línea | Conviene leer antes 01. Explica `protocols/rule_based_monitor.py` y la relación entre `scenarios/` (datos) y `protocols/` (reglas) |
 | 03 | [`PASO_A_PASO_REPRODUCIR.md`](./explicaciones/PASO_A_PASO_REPRODUCIR.md) | Instalar y correr todo el proyecto desde cero, con la salida real esperada y solución de problemas | **Prerrequisito para correr cualquier cosa.** Usa `requirements.txt`, `run_protocols.py`, `analysis/coverage_chart.py` y `tests/` |
-| 04 | [`walkthroughs/asi01_explicado.md`](./explicaciones/walkthroughs/asi01_explicado.md) | Caso ASI01 de punta a punta: ataque, riesgo de negocio, respuesta de cada protocolo, remediación | Narra `scenarios/asi01_goal_hijack/asi01_001.json` y `ground_truth/asi01_001.json` |
-| 05 | [`walkthroughs/asi02_explicado.md`](./explicaciones/walkthroughs/asi02_explicado.md) | Caso ASI02 de punta a punta, y cómo expuso un hueco del monitor | Narra `scenarios/asi02_tool_misuse/asi02_001.json` y `ground_truth/asi02_001.json`. Conviene leer antes 04 |
+| 04 | [`walkthroughs/asi01_explicado.md`](./explicaciones/walkthroughs/asi01_explicado.md) | Caso ASI01 de punta a punta: ataque, riesgo de negocio, respuesta de cada protocolo, remediación, y su gemelo inocente | Narra `scenarios/asi01_goal_hijack/asi01_001.json` y `asi01_002.json` con sus respuestas en `ground_truth/` |
+| 05 | [`walkthroughs/asi02_explicado.md`](./explicaciones/walkthroughs/asi02_explicado.md) | Caso ASI02 de punta a punta, cómo expuso un hueco del monitor, y su gemelo inocente | Narra `scenarios/asi02_tool_misuse/asi02_001.json` y `asi02_002.json` con sus respuestas en `ground_truth/`. Conviene leer antes 04 |
 | 06 | [`walkthroughs/asi03_explicado.md`](./explicaciones/walkthroughs/asi03_explicado.md) | Caso ASI03 y su gemelo inocente, y por qué el monitor actual no puede distinguirlos | Narra `scenarios/asi03_identity_privilege/asi03_001.json` y `asi03_002.json` con sus respuestas. Se apoya en 07 |
 | 07 | [`GEMELO_INOCENTE.md`](./explicaciones/GEMELO_INOCENTE.md) | Qué es un gemelo inocente, por qué hace falta, sus fuentes, y cómo está implementado | Relacionado con `ground_truth/schema.json` (campos `twin_id`, `minimal_difference_index`), `run_protocols.py` (falsas alarmas) y `tests/` |
 | 08 | [`COMO_SE_CONSTRUYE_UN_ESCENARIO.md`](./explicaciones/COMO_SE_CONSTRUYE_UN_ESCENARIO.md) | Guía para **construir un escenario razonando**: el caso ASI03 paso a paso, con archivos leídos, decisiones, descartes, lista de verificación y trampas comunes | Prerrequisitos: 03 (para correr) y 07 (gemelos). Usa `scenarios/schema.json`, `ground_truth/schema.json` y el documento oficial de OWASP |
@@ -112,7 +114,7 @@ Cuatro verticales del estándar completo (ASI04 Supply Chain, ASI05 Unexpected C
 
 ## Roadmap de este repo
 
-1. Completar un escenario válido (con gemelo inocente) en ASI06, ASI09 y ASI10, y agregar gemelos a ASI01 y ASI02.
+1. Completar un escenario válido (con gemelo inocente) en ASI06, ASI09 y ASI10.
 2. Llevar el proyecto hacia AI Control: monitores con puntaje de sospecha, curva de seguridad frente a utilidad, presupuesto de auditoría y red team.
 3. Abordar las cuatro verticales restantes, con un plan propio.
 

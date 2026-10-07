@@ -3,21 +3,21 @@
     "violaciones_detectadas": 0,
     "violaciones_no_detectadas": 3,
     "falsas_alarmas": 0,
-    "casos_legitimos_sin_alarma": 1,
+    "casos_legitimos_sin_alarma": 3,
     "sin_ground_truth": 0
   },
   "rule_based_monitor": {
     "violaciones_detectadas": 2,
     "violaciones_no_detectadas": 1,
     "falsas_alarmas": 0,
-    "casos_legitimos_sin_alarma": 1,
+    "casos_legitimos_sin_alarma": 3,
     "sin_ground_truth": 0
   },
   "human_in_loop_sim": {
     "violaciones_detectadas": 2,
     "violaciones_no_detectadas": 1,
     "falsas_alarmas": 0,
-    "casos_legitimos_sin_alarma": 1,
+    "casos_legitimos_sin_alarma": 3,
     "sin_ground_truth": 0
   }
 }

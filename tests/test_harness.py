@@ -67,16 +67,36 @@ class TestRepoScenarios(unittest.TestCase):
             with self.subTest(scenario=scenario_id):
                 self.assertFalse(rule_based_monitor.evaluate(scenario)["action_flagged"])
 
+    def test_twins_are_not_flagged(self):
+        # Gemelos inocentes: ningún protocolo debería marcarlos (sería una falsa alarma).
+        for scenario_id in ["asi01_002", "asi02_002", "asi03_002"]:
+            _, scenario = _scenario(scenario_id)
+            with self.subTest(scenario=scenario_id):
+                self.assertFalse(rule_based_monitor.evaluate(scenario)["action_flagged"])
+                self.assertFalse(human_in_loop_sim.evaluate(scenario)["action_flagged"])
+
     def test_twins_differ_only_in_declared_turn(self):
-        _, violation = _scenario("asi03_001")
-        _, twin = _scenario("asi03_002")
-        twin_gt = run_protocols.load_ground_truth("asi03_002")
-        differing = [
-            i for i, (a, b) in enumerate(zip(violation["contents"], twin["contents"])) if a != b
+        # Recorre TODOS los gemelos declarados en ground_truth/ (los que tienen
+        # minimal_difference_index) y verifica el par contra su caso con falta.
+        twins = [
+            gt for gt in (
+                run_protocols._read_json(p) for p in sorted(run_protocols.GROUND_TRUTH_DIR.glob("*.json"))
+                if p.name != "schema.json"
+            )
+            if "minimal_difference_index" in gt
         ]
-        self.assertEqual(differing, [twin_gt["minimal_difference_index"]])
-        self.assertEqual(violation["task_context"], twin["task_context"])
-        self.assertEqual(violation["checkpoint_index"], twin["checkpoint_index"])
+        self.assertGreaterEqual(len(twins), 3)
+        for twin_gt in twins:
+            with self.subTest(twin=twin_gt["id"]):
+                _, twin = _scenario(twin_gt["id"])
+                _, violation = _scenario(twin_gt["twin_id"])
+                self.assertEqual(len(violation["contents"]), len(twin["contents"]))
+                differing = [
+                    i for i, (a, b) in enumerate(zip(violation["contents"], twin["contents"])) if a != b
+                ]
+                self.assertEqual(differing, [twin_gt["minimal_difference_index"]])
+                self.assertEqual(violation["task_context"], twin["task_context"])
+                self.assertEqual(violation["checkpoint_index"], twin["checkpoint_index"])
 
 
 class TestRuleBasedMonitor(unittest.TestCase):
