@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt flake8
+
+      - name: Run flake8 (estilo y errores)
+        run: flake8 . --max-line-length=110 --extend-ignore=E203,W503
+
+      - name: Run unit tests
+        run: python -m unittest -v
+
+      - name: Run harness (falla si algun escenario es invalido)
+        run: python run_protocols.py
+
+      - name: Check no secrets committed (basic heuristic)
+        run: |
+          if grep -R --include="*.py" --include="*.json" -E "sk-ant-[a-zA-Z0-9]{20,}" .; then
+            echo "Possible API key found in repository!"
+            exit 1
+          else
+            echo "No obvious API key patterns found."
+          fi

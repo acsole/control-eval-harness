@@ -15,7 +15,6 @@ Uso:
 Requiere: matplotlib (ver requirements.txt)
 """
 
-import json
 import os
 from pathlib import Path
 
@@ -44,7 +43,9 @@ def count_scenarios_per_vertical() -> dict:
         if not dir_path.exists():
             counts[label] = 0
             continue
-        json_files = [f for f in os.listdir(dir_path) if f.endswith(".json")]
+        json_files = [
+            f for f in os.listdir(dir_path) if f.endswith(".json") and f != "schema.json"
+        ]
         counts[label] = len(json_files)
     return counts
 

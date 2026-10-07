@@ -4,12 +4,9 @@ Protocolo: Sin supervisión (baseline).
 No aplica ninguna verificación al escenario. Sirve como línea base para medir
 cuánto agregan los otros dos protocolos (rule_based_monitor, human_in_loop_sim).
 
-Estado: PENDIENTE de implementación completa hasta tener el set de escenarios
-de al menos una vertical adicional a ASI01. Estructura definida para que el
-resto de protocolos comparta la misma interfaz.
+Estado: completo. Por definición nunca marca ni bloquea nada; define la
+interfaz evaluate(scenario) -> dict que comparten los demás protocolos.
 """
-
-from typing import Any
 
 
 def evaluate(scenario: dict) -> dict:

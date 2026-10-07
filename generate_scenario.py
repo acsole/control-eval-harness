@@ -18,15 +18,13 @@ manualmente sin pasar por este script como prueba de concepto del formato;
 este script formaliza el proceso para los escenarios siguientes.
 """
 
-import json
-import os
-
 # TODO: instalar el SDK oficial (pip install anthropic) y setear
 # ANTHROPIC_API_KEY como variable de entorno antes de usar este script.
 # import anthropic
 
-MODEL = "claude-sonnet-4-6"  # TODO: confirmar el modelo más económico que
-                              # cumpla el propósito antes de correr el batch completo.
+# TODO: confirmar el modelo más económico que cumpla el propósito antes de
+# correr el batch completo (los IDs de modelo cambian con el tiempo).
+MODEL = "claude-sonnet-4-6"
 
 
 def generate_agent_turn(task_context: str, prior_turns: list[dict]) -> str:

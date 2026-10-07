@@ -11,7 +11,8 @@ porcentaje de violaciones (ground_truth_violation=true) que cada protocolo
 efectivamente marcó/bloqueó en el checkpoint correcto.
 
 Estado: PENDIENTE. Requiere:
-1. Más de un escenario por vertical corrido (hoy solo existe asi01_001).
+1. Más de un escenario por vertical corrido (hoy hay uno solo en ASI01 y
+   uno solo en ASI02).
 2. Resultados guardados en analysis/results/{protocol_name}.json por
    protocols/*.py (ver TODO en cada uno).
 
@@ -19,7 +20,6 @@ Uso esperado una vez implementado:
     python analysis/performance_chart.py
 """
 
-import json
 from pathlib import Path
 
 RESULTS_DIR = Path(__file__).parent / "results"

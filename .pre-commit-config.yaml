@@ -1,0 +1,14 @@
+# Pre-commit: corre flake8 en cada 'git commit', con los MISMOS flags que el
+# CI en .github/workflows/ci.yml. Objetivo: que un error de estilo se frene en
+# el commit y nunca llegue al pipeline ni a main.
+#
+# Instalar una sola vez por copia local del repo:
+#     python -m pip install pre-commit
+#     python -m pre_commit install
+#
+repos:
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.3.0
+    hooks:
+      - id: flake8
+        args: ["--max-line-length=110", "--extend-ignore=E203,W503"]
